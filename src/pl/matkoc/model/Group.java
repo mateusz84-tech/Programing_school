@@ -1,13 +1,13 @@
 package pl.matkoc.model;
 
-public class UserGroup {
+public class Group {
 
     private int id;
     private String name;
 
-    public UserGroup() {};
+    public Group() {};
 
-    public UserGroup(String name) {
+    public Group(String name) {
         if(name.isBlank() || name.isEmpty()){
             throw new IllegalArgumentException("Nazwa nie możę być pusta.");
         }
