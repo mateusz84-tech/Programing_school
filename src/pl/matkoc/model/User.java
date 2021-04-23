@@ -8,7 +8,7 @@ public class User {
     private String userName;
     private String email;
     private String password;
-    private int userGroupId;
+    private int groupId;
 
     public void hashPassword(String password){
         this.password = BCrypt.hashpw(password,BCrypt.gensalt());
@@ -26,7 +26,7 @@ public class User {
         }
         this.userName = userName;
         this.email = email;
-        this.userGroupId = userGroupId;
+        this.groupId = userGroupId;
         this.hashPassword(password);
     }
 
@@ -69,15 +69,15 @@ public class User {
         return password;
     }
 
-    public int getUserGroupId() {
-        return userGroupId;
+    public int getGroupId() {
+        return groupId;
     }
 
-    public void setUserGroupId(int userGroupId) {
+    public void setGroupId(int userGroupId) {
         if(userGroupId < 0){
             throw new IllegalArgumentException("Id nie może być mniejsze od zera.");
         }
-        this.userGroupId = userGroupId;
+        this.groupId = userGroupId;
     }
 
     public void setPassword(String password) {
@@ -90,6 +90,6 @@ public class User {
     @Override
     public String toString() {
         return String.format("%d %s %s %s: %d"
-                ,getId(),getUserName(),getEmail(),"Id grupy",getUserGroupId());
+                ,getId(),getUserName(),getEmail(),"Id grupy",getGroupId());
     }
 }
