@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupDao {
 
@@ -18,6 +20,7 @@ public class GroupDao {
             "UPDATE user_group SET name = ? WHERE id = ?";
     private final String DELETE_GROUP_QUERY =
             "DELETE FROM user_group WHERE id = ?";
+    private final String GET_ALL_GROUP = "SELECT * FROM user_group";
 
     public Group create(Group group){
         try(Connection connection = DBUtil.getConnection()){
@@ -75,6 +78,26 @@ public class GroupDao {
             System.out.println("Usunieto obiekt z bazy.");
         }catch (SQLException exc){
             exc.printStackTrace();
+        }
+    }
+
+    public List<Group> findAll(){
+        List<Group> groupList = new ArrayList<>();
+        Group group = new Group();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(GET_ALL_GROUP);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                group.setId(resultSet.getInt("id"));
+                group.setName(resultSet.getString("name"));
+
+                groupList.add(group);
+            }
+            System.out.println("Wielkość listy: " + groupList.size());
+            return groupList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
         }
     }
 }
