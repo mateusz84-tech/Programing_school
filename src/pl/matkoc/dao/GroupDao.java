@@ -16,6 +16,8 @@ public class GroupDao {
             "SELECT * FROM user_group WHERE id = ?";
     private final String UPDATE_GROUP_QUERY =
             "UPDATE user_group SET name = ? WHERE id = ?";
+    private final String DELETE_GROUP_QUERY =
+            "DELETE FROM user_group WHERE id = ?";
 
     public Group create(Group group){
         try(Connection connection = DBUtil.getConnection()){
@@ -60,6 +62,17 @@ public class GroupDao {
             statement.setInt(2,group.getId());
             statement.executeUpdate();
             System.out.println("Zaktualizowano dane.");
+        }catch (SQLException exc){
+            exc.printStackTrace();
+        }
+    }
+
+    public void delete(int id){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(DELETE_GROUP_QUERY);
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            System.out.println("Usunieto obiekt z bazy.");
         }catch (SQLException exc){
             exc.printStackTrace();
         }
