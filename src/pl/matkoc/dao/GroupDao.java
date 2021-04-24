@@ -14,6 +14,8 @@ public class GroupDao {
             "INSERT INTO user_group(name) VALUES(?)";
     private final String READ_GROUP_QUERY =
             "SELECT * FROM user_group WHERE id = ?";
+    private final String UPDATE_GROUP_QUERY =
+            "UPDATE user_group SET name = ? WHERE id = ?";
 
     public Group create(Group group){
         try(Connection connection = DBUtil.getConnection()){
@@ -48,6 +50,18 @@ public class GroupDao {
         }catch (SQLException exc){
             exc.printStackTrace();
             return null;
+        }
+    }
+
+    public void update (Group group){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP_QUERY);
+            statement.setString(1,group.getName());
+            statement.setInt(2,group.getId());
+            statement.executeUpdate();
+            System.out.println("Zaktualizowano dane.");
+        }catch (SQLException exc){
+            exc.printStackTrace();
         }
     }
 }
