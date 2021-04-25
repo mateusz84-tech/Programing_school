@@ -8,15 +8,15 @@ public class User {
     private String userName;
     private String email;
     private String password;
-    private Group group;
+    private int group_id;
 
     public void hashPassword(String password){
         this.password = BCrypt.hashpw(password,BCrypt.gensalt());
     }
 
-    public User(String userName, String email, String password, Group group) {
-        if(group == null){
-            throw new NullPointerException("Grupa nie może być pusta.");
+    public User(String userName, String email, String password, int group_id) {
+        if(group_id < 0){
+            throw new NullPointerException("Id nie może być mniejsze od zera.");
         }
         if(userName.isEmpty() || userName.isBlank()){
             throw new IllegalArgumentException("Nazwa nie może być pusta.");
@@ -26,7 +26,7 @@ public class User {
         }
         this.userName = userName;
         this.email = email;
-        this.group = group;
+        this.group_id = group_id;
         this.hashPassword(password);
     }
 
@@ -69,15 +69,15 @@ public class User {
         return password;
     }
 
-    public Group getGroup() {
-        return group;
+    public int getGroupId() {
+        return group_id;
     }
 
-    public void setGroup(Group group) {
-        if(group == null){
-            throw new NullPointerException("Grupa nie może być typu null");
+    public void setGroup(int group_id) {
+        if(group_id < 0){
+            throw new NullPointerException("Id nie może być mniejsze od zera.");
         }
-        this.group = group;
+        this.group_id = group_id;
     }
 
     public void setPassword(String password) {
@@ -89,7 +89,7 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("%d %s %s %s: %s"
-                ,getId(),getUserName(),getEmail(),"Grupa",group.toString());
+        return String.format("%d %s %s %s: %d"
+                ,getId(),getUserName(),getEmail(),"Id grupy",group_id);
     }
 }
