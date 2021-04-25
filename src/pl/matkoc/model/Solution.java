@@ -8,12 +8,12 @@ public class Solution {
     private LocalDateTime created;
     private LocalDateTime updated;
     private String description;
-    private int exercise_id;
-    private int user_id;
+    private Exercise exercise;
+    private User user;
 
     public Solution() {};
 
-    public Solution(LocalDateTime created, LocalDateTime updated, String description, int exercise_id, int user_id) {
+    public Solution(LocalDateTime created, LocalDateTime updated, String description, Exercise exercise, User user) {
         if(created == null){
             throw new NullPointerException("Data utworzenia nie może być pusta.");
         }
@@ -23,17 +23,17 @@ public class Solution {
         if(description.isEmpty() || description.isBlank()){
             throw new IllegalArgumentException("Opis nie może być pusty.");
         }
-        if(exercise_id < 0){
-            throw new IllegalArgumentException("Id nie może być puste.");
+        if(exercise == null){
+            throw new NullPointerException("Wartość nie może być pusta.");
         }
-        if(user_id < 0){
-            throw new IllegalArgumentException("Id nie może być puste.");
+        if(user == null){
+            throw new NullPointerException("Wartość nie może być pusta.");
         }
         this.created = created;
         this.updated = updated;
         this.description = description;
-        this.exercise_id = exercise_id;
-        this.user_id = user_id;
+        this.exercise = exercise;
+        this.user = user;
     }
 
     public int getId() {
@@ -80,32 +80,32 @@ public class Solution {
         this.description = description;
     }
 
-    public int getExercise_id() {
-        return exercise_id;
+    public Exercise getExercise() {
+        return exercise;
     }
 
-    public void setExercise_id(int exercise_id) {
-        if(exercise_id < 0){
-            throw new IllegalArgumentException("Id nie może być mniejsze od zera.");
+    public void setExercise(Exercise exercise) {
+        if(exercise == null){
+            throw new NullPointerException("Wartość nie może być pusta.");
         }
-        this.exercise_id = exercise_id;
+        this.exercise = exercise;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(int user_id) {
-        if(user_id < 0){
-            throw new IllegalArgumentException("Id nie może być mniejsze od zera.");
+    public void setUser(User user) {
+        if(user == null){
+            throw new NullPointerException("Wartość nie może być pusta.");
         }
-        this.user_id = user_id;
+        this.user = user;
     }
 
     @Override
     public String toString() {
-        return String.format("%d %tB %tB %s %s: %d %s: %d"
-                ,getId(),getCreated(),getUpdated(),getDescription()
-                ,"Id ćwiczenia",getExercise_id(),"Id użytkownika",getUser_id());
+        return String.format("%d %tB %tB %s%n%s: %s%n%s %s"
+                ,getId(),getCreated(),getUpdated(),getDescription(),
+                "Użytkownik",user.toString(),"Ćwiczenie",exercise.toString());
     }
 }
