@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseDao {
 
@@ -19,7 +21,7 @@ public class ExerciseDao {
     private final String DELETE_EXERCISE_QUERY =
             "DELETE FROM exercise WHERE id = ?";
     private final String GET_ALL_EXERCISE =
-            "SELECT * FORM exercise";
+            "SELECT * FROM exercise";
 
     public Exercise create(Exercise exercise){
         try(Connection connection = DBUtil.getConnection()) {
@@ -79,6 +81,27 @@ public class ExerciseDao {
             System.out.println("Dane zostały usunięte z bazy.");
         }catch (SQLException exc){
             exc.printStackTrace();
+        }
+    }
+
+    public List<Exercise> findAll(){
+        Exercise exercise = new Exercise();
+        List<Exercise> exerciseList = new ArrayList<>();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(GET_ALL_EXERCISE);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                exercise.setId(resultSet.getInt("id"));
+                exercise.setTitle(resultSet.getString("title"));
+                exercise.setDescription(resultSet.getString("description"));
+
+                exerciseList.add(exercise);
+            }
+            System.out.println("Wielkość listy: " + exerciseList.size());
+            return exerciseList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
         }
     }
 }
