@@ -70,4 +70,15 @@ public class ExerciseDao {
             exc.printStackTrace();
         }
     }
+
+    public void delete(int id){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(DELETE_EXERCISE_QUERY);
+            statement.setInt(1,id);
+            statement.executeUpdate();
+            System.out.println("Dane zostały usunięte z bazy.");
+        }catch (SQLException exc){
+            exc.printStackTrace();
+        }
+    }
 }
