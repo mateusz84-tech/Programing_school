@@ -51,11 +51,23 @@ public class ExerciseDao {
                 exercise.setTitle(resultSet.getString("title"));
                 exercise.setDescription(resultSet.getString("description"));
             }
-            System.out.println(exercise.toString());
             return exercise;
         }catch (SQLException exc){
             exc.printStackTrace();
             return null;
+        }
+    }
+
+    public void update(Exercise exercise){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(UPDATE_EXERCISE_QUERY);
+            statement.setString(1,exercise.getTitle());
+            statement.setString(2, exercise.getDescription());
+            statement.setInt(3,exercise.getId());
+            statement.executeUpdate();
+            System.out.println("Dane uaktualniono.");
+        }catch (SQLException exc){
+            exc.printStackTrace();
         }
     }
 }
