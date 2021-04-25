@@ -32,6 +32,26 @@ public class ExerciseDao {
             while(resultSet.next()){
                 exercise.setId(resultSet.getInt(1));
             }
+            System.out.println("Zapisano w bazie danych.");
+            return exercise;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
+    public Exercise read(int exercise_id){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(READ_EXERCISE_QUERY);
+            statement.setInt(1,exercise_id);
+            ResultSet resultSet = statement.executeQuery();
+            Exercise exercise = new Exercise();
+            while(resultSet.next()){
+                exercise.setId(resultSet.getInt("id"));
+                exercise.setTitle(resultSet.getString("title"));
+                exercise.setDescription(resultSet.getString("description"));
+            }
+            System.out.println(exercise.toString());
             return exercise;
         }catch (SQLException exc){
             exc.printStackTrace();
