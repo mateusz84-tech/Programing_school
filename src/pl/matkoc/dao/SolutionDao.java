@@ -5,6 +5,8 @@ import pl.matkoc.model.Solution;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SolutionDao {
 
@@ -14,6 +16,10 @@ public class SolutionDao {
             "SELECT * FROM solution JOIN users ON users.id_user = solution.user_id JOIN exercise ON exercise.id_exercise = solution.exercise_id WHERE id_solution = ?";
     private final String UPDATE_SOLUTION_QUERY =
             "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, user_id = ? WHERE id_solution = ?";
+    private final String DELETE_SOLUTION_QUERY =
+            "DELETE FROM solution WHERE id_solution = ?";
+    private final String FIND_ALL_SOLUTION_QUERY =
+            "SELECT * FROM solution";
 
     public Solution create(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
@@ -70,6 +76,39 @@ public class SolutionDao {
             statement.executeUpdate();
         }catch (SQLException exc){
             exc.printStackTrace();
+        }
+    }
+
+    public void delete(int solutionId){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(DELETE_SOLUTION_QUERY);
+            statement.setInt(1,solutionId);
+            statement.executeUpdate();
+        }catch (SQLException exc){
+            exc.printStackTrace();
+        }
+    }
+
+    public List<Solution> findAll(){
+        List<Solution> solutionList = new ArrayList<>();
+        Solution solution = new Solution();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(FIND_ALL_SOLUTION_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                solution.setId(resultSet.getInt("id_solution"));
+                solution.setCreated(resultSet.getDate("created"));
+                solution.setUpdated(resultSet.getDate("updated"));
+                solution.setDescription(resultSet.getString("description"));
+                solution.setExerciseId(resultSet.getInt("exercise_id"));
+                solution.setUserId(resultSet.getInt("user_id"));
+
+                solutionList.add(solution);
+            }
+            return solutionList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
         }
     }
 
