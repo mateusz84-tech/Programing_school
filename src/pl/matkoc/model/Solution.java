@@ -1,19 +1,20 @@
 package pl.matkoc.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Solution {
 
     private int id;
-    private LocalDate created;
-    private LocalDate updated;
+    private Date created;
+    private Date updated;
     private String description;
     private int exercise_id;
     private int user_id;
 
     public Solution() {};
 
-    public Solution(LocalDate created, LocalDate updated, String description, int exercise_id, int user_id) {
+    public Solution(Date created, Date updated, String description, int exercise_id, int user_id) {
         if(created == null){
             throw new NullPointerException("Data utworzenia nie może być pusta.");
         }
@@ -47,22 +48,22 @@ public class Solution {
         this.id = id;
     }
 
-    public LocalDate getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(Date created) {
         if(created == null){
             throw new NullPointerException("Data nie może być pusta.");
         }
         this.created = created;
     }
 
-    public LocalDate getUpdated() {
+    public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDate updated) {
+    public void setUpdated(Date updated) {
         if(updated == null){
             throw new NullPointerException("Data nie może być pusta.");
         }
