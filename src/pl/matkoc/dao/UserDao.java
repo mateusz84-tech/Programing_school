@@ -22,6 +22,8 @@ public class UserDao {
             "DELETE FROM users WHERE id_user = ?";
     private final String FIND_ALL_USERS =
             "SELECT * FROM users";
+    private final String FIND_ALL_USERS_BY_GROUP_ID =
+            "SELECT * FROM users WHERE user_group_id = ?";
 
     public User create(User user){
         try(Connection connection = DBUtil.getConnection()){
@@ -95,6 +97,29 @@ public class UserDao {
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id_user"));
+                user.setUserName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGroupId(resultSet.getInt("user_group_id"));
+
+                userList.add(user);
+            }
+            return userList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<User> findAllByGroupId(int groupId){
+        List<User> userList = new ArrayList<>();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS_BY_GROUP_ID);
+            statement.setInt(1,groupId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
                 User user = new User();
                 user.setId(resultSet.getInt("id_user"));
                 user.setUserName(resultSet.getString("username"));
