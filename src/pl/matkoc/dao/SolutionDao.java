@@ -26,8 +26,9 @@ public class SolutionDao {
             statement.setInt(5,solution.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            solution.setId(resultSet.getInt(1));
+            while(resultSet.next()) {
+                solution.setId(resultSet.getInt(1));
+            }
             return solution;
         }catch (SQLException exc){
             exc.printStackTrace();
@@ -48,7 +49,7 @@ public class SolutionDao {
                solution.setDescription(resultSet.getString("description"));
                solution.setUserId(resultSet.getInt("user_id"));
                solution.setExerciseId(resultSet.getInt("exercise_id"));
-               solution.setId(resultSet.getInt("id"));
+               solution.setId(resultSet.getInt("id_solution"));
             }
             return solution;
         }catch (SQLException exc){

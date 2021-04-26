@@ -15,11 +15,11 @@ public class GroupDao {
     private final String CREATE_GROUP_QUERY =
             "INSERT INTO user_group(name) VALUES(?)";
     private final String READ_GROUP_QUERY =
-            "SELECT * FROM user_group WHERE id = ?";
+            "SELECT * FROM user_group WHERE id_group = ?";
     private final String UPDATE_GROUP_QUERY =
-            "UPDATE user_group SET name = ? WHERE id = ?";
+            "UPDATE user_group SET name = ? WHERE id_group = ?";
     private final String DELETE_GROUP_QUERY =
-            "DELETE FROM user_group WHERE id = ?";
+            "DELETE FROM user_group WHERE id_group = ?";
     private final String GET_ALL_GROUP = "SELECT * FROM user_group";
 
     public Group create(Group group){
@@ -48,7 +48,7 @@ public class GroupDao {
 
             Group group = new Group();
             while(resultSet.next()){
-                group.setId(resultSet.getInt("id"));
+                group.setId(resultSet.getInt("id_group"));
                 group.setName(resultSet.getString("name"));
             }
             return group;
@@ -88,7 +88,7 @@ public class GroupDao {
             PreparedStatement statement = connection.prepareStatement(GET_ALL_GROUP);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
-                group.setId(resultSet.getInt("id"));
+                group.setId(resultSet.getInt("id_group"));
                 group.setName(resultSet.getString("name"));
 
                 groupList.add(group);

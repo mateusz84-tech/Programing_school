@@ -15,11 +15,11 @@ public class UserDao {
     private final String CREATE_USER_QUERY =
             "INSERT INTO users(username,email,password,user_group_id)VALUES(?,?,?,?)";
     private final String READ_USER_QUERY =
-            "SELECT * FORM users WHERE id = ?";
+            "SELECT * FORM users WHERE id_user = ?";
     private final String UPDATE_USER_QUERY =
-            "UPDATE users SET username = ?, email = ?, password = ? user_group_id = ? WHERE id = ?";
+            "UPDATE users SET username = ?, email = ?, password = ? user_group_id = ? WHERE id_user = ?";
     private final String DELETE_USER_QUERY =
-            "DELETE FROM users WHERE id = ?";
+            "DELETE FROM users WHERE id_user = ?";
     private final String FIND_ALL_USERS =
             "SELECT * FROM users";
 

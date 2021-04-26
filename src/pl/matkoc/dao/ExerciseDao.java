@@ -15,11 +15,11 @@ public class ExerciseDao {
     private final String CREATE_EXERCISE_QUERY =
             "INSERT INTO exercise(title, description) VALUES(?,?)";
     private final String READ_EXERCISE_QUERY =
-            "SELECT * FROM exercise WHERE id = ?";
+            "SELECT * FROM exercise WHERE id_exercise = ?";
     private final String UPDATE_EXERCISE_QUERY =
-            "UPDATE exercise SET title = ?, description = ? WHERE id = ?";
+            "UPDATE exercise SET title = ?, description = ? WHERE id_exercise = ?";
     private final String DELETE_EXERCISE_QUERY =
-            "DELETE FROM exercise WHERE id = ?";
+            "DELETE FROM exercise WHERE id_exercise = ?";
     private final String GET_ALL_EXERCISE =
             "SELECT * FROM exercise";
 
@@ -49,7 +49,7 @@ public class ExerciseDao {
             ResultSet resultSet = statement.executeQuery();
             Exercise exercise = new Exercise();
             while(resultSet.next()){
-                exercise.setId(resultSet.getInt("id"));
+                exercise.setId(resultSet.getInt("id_exercise"));
                 exercise.setTitle(resultSet.getString("title"));
                 exercise.setDescription(resultSet.getString("description"));
             }
@@ -91,7 +91,7 @@ public class ExerciseDao {
             PreparedStatement statement = connection.prepareStatement(GET_ALL_EXERCISE);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
-                exercise.setId(resultSet.getInt("id"));
+                exercise.setId(resultSet.getInt("id_exercise"));
                 exercise.setTitle(resultSet.getString("title"));
                 exercise.setDescription(resultSet.getString("description"));
 
