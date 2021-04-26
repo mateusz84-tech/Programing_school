@@ -90,11 +90,12 @@ public class UserDao {
 
     public List<User> findAll(){
         List<User> userList = new ArrayList<>();
-        User user = new User();
+
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_USERS);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
+                User user = new User();
                 user.setId(resultSet.getInt("id_user"));
                 user.setUserName(resultSet.getString("username"));
                 user.setEmail(resultSet.getString("email"));
