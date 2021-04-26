@@ -95,11 +95,12 @@ public class SolutionDao {
 
     public List<Solution> findAll(){
         List<Solution> solutionList = new ArrayList<>();
-        Solution solution = new Solution();
+
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_SOLUTION_QUERY);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
+                Solution solution = new Solution();
                 solution.setId(resultSet.getInt("id_solution"));
                 solution.setCreated(resultSet.getTimestamp("created"));
                 solution.setUpdated(resultSet.getTimestamp("updated"));
@@ -118,12 +119,12 @@ public class SolutionDao {
 
     public List<Solution> findAllByUserId(int userId){
         List<Solution> solutionList = new ArrayList<>();
-        Solution solution = new Solution();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_QUERY);
             statement.setInt(1,userId);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
+                Solution solution = new Solution();
                 solution.setId(resultSet.getInt("id_solution"));
                 solution.setCreated(resultSet.getTimestamp("created"));
                 solution.setUpdated(resultSet.getTimestamp("updated"));
