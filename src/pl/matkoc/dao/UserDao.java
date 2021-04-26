@@ -28,7 +28,7 @@ public class UserDao {
             statement.setString(1,user.getUserName());
             statement.setString(2,user.getEmail());
             statement.setString(3,user.getPassword());
-            statement.setInt(4,user.getGroup().getId());
+            statement.setInt(4,user.getGroupId());
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -39,6 +39,40 @@ public class UserDao {
         }catch (SQLException exc){
             exc.printStackTrace();
             return null;
+        }
+    }
+
+    public User read(int userId){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(READ_USER_QUERY);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            User user = new User();
+            while (resultSet.next()){
+                user.setUserName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGroupId(resultSet.getInt("user_group_id"));
+                user.setId(resultSet.getInt("id_user"));
+            }
+            return user;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
+    public void update(User user){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY);
+            statement.setString(1,user.getUserName());
+            statement.setString(2,user.getEmail());
+            statement.setString(3,user.getPassword());
+            statement.setInt(1,user.getGroupId());
+            statement.setInt(5,user.getId());
+            statement.executeUpdate();
+        }catch (SQLException exc){
+            exc.printStackTrace();
         }
     }
 
