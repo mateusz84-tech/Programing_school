@@ -12,8 +12,8 @@ public class SolutionDao {
             "INSERT INTO solution(created,updated,description,exercise_id,user_id) VALUES(?,?,?,?,?)";
     private final String READ_SOLUTION_QUERY =
             "SELECT * FROM solution JOIN users ON users.id_user = solution.user_id JOIN exercise ON exercise.id_exercise = solution.exercise_id WHERE id_solution = ?";
-
-
+    private final String UPDATE_SOLUTION_QUERY =
+            "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, user_id = ? WHERE id_solution = ?";
 
     public Solution create(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
@@ -55,6 +55,21 @@ public class SolutionDao {
         }catch (SQLException exc){
             exc.printStackTrace();
             return null;
+        }
+    }
+
+    public void update(Solution solution){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(UPDATE_SOLUTION_QUERY);
+            statement.setDate(1, (Date) solution.getCreated());
+            statement.setDate(2,(Date) solution.getUpdated());
+            statement.setString(3,solution.getDescription());
+            statement.setInt(4,solution.getExerciseId());
+            statement.setInt(5,solution.getUserId());
+            statement.setInt(6,solution.getId());
+            statement.executeUpdate();
+        }catch (SQLException exc){
+            exc.printStackTrace();
         }
     }
 
