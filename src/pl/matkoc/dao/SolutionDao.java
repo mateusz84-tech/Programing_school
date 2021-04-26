@@ -4,11 +4,14 @@ import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Solution;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class SolutionDao {
 
     private final String CREATED_SOLUTION_QUERY =
             "INSERT INTO solution(created,updated,description,exercise_id,user_id) VALUES(?,?,?,?,?)";
+    private final String READ_SOLUTION_QUERY =
+            "SELECT * FROM solution JOIN users ON users.id_user = solution.user_id JOIN exercise ON exercise.id_exercise = solution.exercise_id WHERE id_solution = ?";
 
 
 
@@ -16,8 +19,8 @@ public class SolutionDao {
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement =
                     connection.prepareStatement(CREATED_SOLUTION_QUERY,PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setDate(1, Date.valueOf(solution.getCreated()));
-            statement.setDate(2,Date.valueOf(solution.getUpdated()));
+            statement.setDate(1, (Date) solution.getCreated());
+            statement.setDate(2,(Date) (solution.getUpdated()));
             statement.setString(3,solution.getDescription());
             statement.setInt(4,solution.getExerciseId());
             statement.setInt(5,solution.getUserId());
@@ -31,4 +34,27 @@ public class SolutionDao {
             return null;
         }
     }
+
+    // todo zmienić w klasie solution pola na LocalDateTime a w metodzie read zastosować resultSet.getTimestamp zamiast getDate
+    public Solution read(int id_solution){
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(READ_SOLUTION_QUERY);
+            statement.setInt(1,id_solution);
+            ResultSet resultSet = statement.executeQuery();
+            Solution solution = new Solution();
+            while(resultSet.next()){
+               solution.setCreated(resultSet.getDate("created"));
+               solution.setUpdated(resultSet.getDate("updated"));
+               solution.setDescription(resultSet.getString("description"));
+               solution.setUserId(resultSet.getInt("user_id"));
+               solution.setExerciseId(resultSet.getInt("exercise_id"));
+               solution.setId(resultSet.getInt("id"));
+            }
+            return solution;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
 }
