@@ -29,8 +29,8 @@ public class SolutionDao {
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement =
                     connection.prepareStatement(CREATED_SOLUTION_QUERY,PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setDate(1, (Date) solution.getCreated());
-            statement.setDate(2,(Date) (solution.getUpdated()));
+            statement.setTimestamp(1, solution.getCreated());
+            statement.setTimestamp(2,solution.getUpdated());
             statement.setString(3,solution.getDescription());
             statement.setInt(4,solution.getExerciseId());
             statement.setInt(5,solution.getUserId());
@@ -71,8 +71,8 @@ public class SolutionDao {
     public void update(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(UPDATE_SOLUTION_QUERY);
-            statement.setDate(1, (Date) solution.getCreated());
-            statement.setDate(2,(Date) solution.getUpdated());
+            statement.setTimestamp(1,  solution.getCreated());
+            statement.setTimestamp(2, solution.getUpdated());
             statement.setString(3,solution.getDescription());
             statement.setInt(4,solution.getExerciseId());
             statement.setInt(5,solution.getUserId());

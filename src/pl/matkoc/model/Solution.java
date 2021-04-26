@@ -49,7 +49,7 @@ public class Solution {
         this.id = id;
     }
 
-    public Date getCreated() {
+    public Timestamp getCreated() {
         return created;
     }
 
@@ -60,7 +60,7 @@ public class Solution {
         this.created = created;
     }
 
-    public Date getUpdated() {
+    public Timestamp getUpdated() {
         return updated;
     }
 
