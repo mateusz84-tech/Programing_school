@@ -83,11 +83,12 @@ public class GroupDao {
 
     public List<Group> findAll(){
         List<Group> groupList = new ArrayList<>();
-        Group group = new Group();
+
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_GROUP);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()){
+                Group group = new Group();
                 group.setId(resultSet.getInt("id_group"));
                 group.setName(resultSet.getString("name"));
 
