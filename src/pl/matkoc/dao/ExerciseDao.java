@@ -85,12 +85,13 @@ public class ExerciseDao {
     }
 
     public List<Exercise> findAll(){
-        Exercise exercise = new Exercise();
+
         List<Exercise> exerciseList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_EXERCISE);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
+                Exercise exercise = new Exercise();
                 exercise.setId(resultSet.getInt("id_exercise"));
                 exercise.setTitle(resultSet.getString("title"));
                 exercise.setDescription(resultSet.getString("description"));
