@@ -24,6 +24,9 @@ public class SolutionDao {
     // pobranie wszystkich rozwiązań danego użytkownika
     private final String FIND_ALL_BY_USER_ID_QUERY =
             "SELECT * FROM solution WHERE user_id = ?";
+    // pobranie wszystkich rozwiązań danego zadania, posortowane od najnowszego
+    private final String FIND_ALL_BY_EXERCISE_ID_QUERY =
+            "SELECT * FROM solution  WHERE exercise_id = ? ORDER BY created DESC";
 
     public Solution create(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
@@ -46,7 +49,6 @@ public class SolutionDao {
         }
     }
 
-    // todo zmienić w klasie solution pola na LocalDateTime a w metodzie read zastosować resultSet.getTimestamp zamiast getDate
     public Solution read(int id_solution){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_SOLUTION_QUERY);
@@ -131,6 +133,30 @@ public class SolutionDao {
                 solution.setDescription(resultSet.getString("description"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
+
+                solutionList.add(solution);
+            }
+            return solutionList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+    public List<Solution> findAllByExerciseId(int exerciseId){
+        List<Solution> solutionList = new ArrayList<>();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_EXERCISE_ID_QUERY);
+            statement.setInt(1,exerciseId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                Solution solution = new Solution();
+                solution.setId(resultSet.getInt("id_solution"));
+                solution.setDescription(resultSet.getString("description"));
+                solution.setCreated(resultSet.getTimestamp("created"));
+                solution.setUpdated(resultSet.getTimestamp("updated"));
+                solution.setExerciseId(resultSet.getInt("exercise_id"));
+                solution.setUserId(resultSet.getInt("user_id"));
+
 
                 solutionList.add(solution);
             }
