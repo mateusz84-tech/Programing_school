@@ -73,7 +73,7 @@ public class User {
         return group_id;
     }
 
-    public void setGroup(int group_id) {
+    public void setGroupId(int group_id) {
         if(group_id < 0){
             throw new NullPointerException("Id nie może być mniejsze od zera.");
         }
