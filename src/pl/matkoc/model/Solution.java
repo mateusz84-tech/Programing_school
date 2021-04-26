@@ -1,20 +1,21 @@
 package pl.matkoc.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
 public class Solution {
 
     private int id;
-    private Date created;
-    private Date updated;
+    private Timestamp created;
+    private Timestamp updated;
     private String description;
     private int exercise_id;
     private int user_id;
 
     public Solution() {};
 
-    public Solution(Date created, Date updated, String description, int exercise_id, int user_id) {
+    public Solution(Timestamp created, Timestamp updated, String description, int exercise_id, int user_id) {
         if(created == null){
             throw new NullPointerException("Data utworzenia nie może być pusta.");
         }
@@ -52,7 +53,7 @@ public class Solution {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(Timestamp created) {
         if(created == null){
             throw new NullPointerException("Data nie może być pusta.");
         }
@@ -63,7 +64,7 @@ public class Solution {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(Timestamp updated) {
         if(updated == null){
             throw new NullPointerException("Data nie może być pusta.");
         }

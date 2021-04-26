@@ -1,5 +1,6 @@
 package pl.matkoc.dao;
 
+import com.mysql.cj.jdbc.ConnectionImpl;
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Solution;
 
@@ -20,6 +21,9 @@ public class SolutionDao {
             "DELETE FROM solution WHERE id_solution = ?";
     private final String FIND_ALL_SOLUTION_QUERY =
             "SELECT * FROM solution";
+    // pobranie wszystkich rozwiązań danego użytkownika
+    private final String FIND_ALL_BY_USER_ID_QUERY =
+            "SELECT * FROM solution WHERE user_id = ?";
 
     public Solution create(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
@@ -50,8 +54,8 @@ public class SolutionDao {
             ResultSet resultSet = statement.executeQuery();
             Solution solution = new Solution();
             while(resultSet.next()){
-               solution.setCreated(resultSet.getDate("created"));
-               solution.setUpdated(resultSet.getDate("updated"));
+               solution.setCreated(resultSet.getTimestamp("created"));
+               solution.setUpdated(resultSet.getTimestamp("updated"));
                solution.setDescription(resultSet.getString("description"));
                solution.setUserId(resultSet.getInt("user_id"));
                solution.setExerciseId(resultSet.getInt("exercise_id"));
@@ -97,8 +101,32 @@ public class SolutionDao {
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 solution.setId(resultSet.getInt("id_solution"));
-                solution.setCreated(resultSet.getDate("created"));
-                solution.setUpdated(resultSet.getDate("updated"));
+                solution.setCreated(resultSet.getTimestamp("created"));
+                solution.setUpdated(resultSet.getTimestamp("updated"));
+                solution.setDescription(resultSet.getString("description"));
+                solution.setExerciseId(resultSet.getInt("exercise_id"));
+                solution.setUserId(resultSet.getInt("user_id"));
+
+                solutionList.add(solution);
+            }
+            return solutionList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Solution> findAllByUserId(int userId){
+        List<Solution> solutionList = new ArrayList<>();
+        Solution solution = new Solution();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_QUERY);
+            statement.setInt(1,userId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                solution.setId(resultSet.getInt("id_solution"));
+                solution.setCreated(resultSet.getTimestamp("created"));
+                solution.setUpdated(resultSet.getTimestamp("updated"));
                 solution.setDescription(resultSet.getString("description"));
                 solution.setExerciseId(resultSet.getInt("exercise_id"));
                 solution.setUserId(resultSet.getInt("user_id"));
