@@ -14,7 +14,7 @@ public class SolutionDao {
     private final String CREATED_SOLUTION_QUERY =
             "INSERT INTO solution(created,updated,description,exercise_id,user_id) VALUES(?,?,?,?,?)";
     private final String READ_SOLUTION_QUERY =
-            "SELECT * FROM solution JOIN users ON users.id_user = solution.user_id JOIN exercise ON exercise.id_exercise = solution.exercise_id WHERE id_solution = ?";
+            "SELECT * FROM solution WHERE id_solution = ?";
     private final String UPDATE_SOLUTION_QUERY =
             "UPDATE solution SET created = ?, updated = ?, description = ?, exercise_id = ?, user_id = ? WHERE id_solution = ?";
     private final String DELETE_SOLUTION_QUERY =
@@ -54,12 +54,12 @@ public class SolutionDao {
             ResultSet resultSet = statement.executeQuery();
             Solution solution = new Solution();
             while(resultSet.next()){
-               solution.setCreated(resultSet.getTimestamp("created"));
-               solution.setUpdated(resultSet.getTimestamp("updated"));
-               solution.setDescription(resultSet.getString("description"));
-               solution.setUserId(resultSet.getInt("user_id"));
-               solution.setExerciseId(resultSet.getInt("exercise_id"));
-               solution.setId(resultSet.getInt("id_solution"));
+                solution.setId(resultSet.getInt("id_solution"));
+                solution.setCreated(resultSet.getTimestamp("created"));
+                solution.setUpdated(resultSet.getTimestamp("updated"));
+                solution.setDescription(resultSet.getString("description"));
+                solution.setExerciseId(resultSet.getInt("exercise_id"));
+                solution.setUserId(resultSet.getInt("user_id"));
             }
             return solution;
         }catch (SQLException exc){
