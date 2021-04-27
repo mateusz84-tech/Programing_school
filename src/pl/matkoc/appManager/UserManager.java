@@ -12,6 +12,7 @@ public class UserManager {
         UserDao userDao = new UserDao();
         displayAllUser(userDao);
         Menu.display();
+        Menu.getChoiceMenu();
 
     }
 
