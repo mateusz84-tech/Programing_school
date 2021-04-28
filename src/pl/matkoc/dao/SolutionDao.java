@@ -3,13 +3,13 @@ package pl.matkoc.dao;
 import com.mysql.cj.jdbc.ConnectionImpl;
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Solution;
+import pl.matkoc.service.CrudManager;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SolutionDao {
+public class SolutionDao implements CrudManager<Solution, Integer> {
 
     private final String CREATED_SOLUTION_QUERY =
             "INSERT INTO solution(created,updated,description,exercise_id,user_id) VALUES(?,?,?,?,?)";
@@ -28,6 +28,15 @@ public class SolutionDao {
     private final String FIND_ALL_BY_EXERCISE_ID_QUERY =
             "SELECT * FROM solution  WHERE exercise_id = ? ORDER BY created DESC";
 
+    public String getFIND_ALL_BY_USER_ID_QUERY() {
+        return FIND_ALL_BY_USER_ID_QUERY;
+    }
+
+    public String getFIND_ALL_BY_EXERCISE_ID_QUERY() {
+        return FIND_ALL_BY_EXERCISE_ID_QUERY;
+    }
+
+    @Override
     public Solution create(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement =
@@ -49,7 +58,8 @@ public class SolutionDao {
         }
     }
 
-    public Solution read(int id_solution){
+    @Override
+    public Solution read(Integer id_solution){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_SOLUTION_QUERY);
             statement.setInt(1,id_solution);
@@ -70,6 +80,7 @@ public class SolutionDao {
         }
     }
 
+    @Override
     public void update(Solution solution){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(UPDATE_SOLUTION_QUERY);
@@ -85,7 +96,8 @@ public class SolutionDao {
         }
     }
 
-    public void delete(int solutionId){
+    @Override
+    public void delete(Integer solutionId){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(DELETE_SOLUTION_QUERY);
             statement.setInt(1,solutionId);
@@ -95,6 +107,7 @@ public class SolutionDao {
         }
     }
 
+    @Override
     public List<Solution> findAll(){
         List<Solution> solutionList = new ArrayList<>();
 
@@ -119,7 +132,7 @@ public class SolutionDao {
         }
     }
 
-    public List<Solution> findAllByUserId(int userId){
+    public List<Solution> findAllByUserId(Integer userId){
         List<Solution> solutionList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_USER_ID_QUERY);
@@ -142,7 +155,7 @@ public class SolutionDao {
             return null;
         }
     }
-    public List<Solution> findAllByExerciseId(int exerciseId){
+    public List<Solution> findAllByExerciseId(Integer exerciseId){
         List<Solution> solutionList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_EXERCISE_ID_QUERY);

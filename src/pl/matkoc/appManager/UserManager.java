@@ -2,9 +2,11 @@ package pl.matkoc.appManager;
 
 import pl.matkoc.dao.ExerciseDao;
 import pl.matkoc.dao.GroupDao;
+import pl.matkoc.dao.SolutionDao;
 import pl.matkoc.dao.UserDao;
 import pl.matkoc.model.Exercise;
 import pl.matkoc.model.Group;
+import pl.matkoc.model.Solution;
 import pl.matkoc.model.User;
 import pl.matkoc.service.CrudManager;
 
@@ -17,10 +19,15 @@ public class UserManager {
         ExerciseDao exerciseDao = new ExerciseDao();
         CrudManager<Exercise,Integer> crudManager = exerciseDao;
         System.out.println(crudManager.read(1));
-        System.out.println(crudManager.finaAll());
+        System.out.println(crudManager.findAll());
         CrudManager<Group,Integer> crudManager1 = new GroupDao();
         System.out.println(crudManager1.read(1));
-        System.out.println(crudManager1.finaAll());
+        System.out.println(crudManager1.findAll());
+        SolutionDao solutionDao = new SolutionDao();
+        CrudManager<Solution,Integer> crudManager2 = solutionDao;
+        System.out.println(crudManager2.findAllByUserId(1, solutionDao.getFIND_ALL_BY_USER_ID_QUERY()));
+        System.out.println(crudManager2.findAllByExerciseId(1, solutionDao.getFIND_ALL_BY_EXERCISE_ID_QUERY()));
+
 
     }
 
