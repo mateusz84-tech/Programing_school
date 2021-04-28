@@ -2,6 +2,7 @@ package pl.matkoc.dao;
 
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.User;
+import pl.matkoc.service.CrudManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
+public class UserDao implements CrudManager<User,Integer> {
 
     private final String CREATE_USER_QUERY =
             "INSERT INTO users(username,email,password,user_group_id)VALUES(?,?,?,?)";
@@ -25,6 +26,11 @@ public class UserDao {
     private final String FIND_ALL_USERS_BY_GROUP_ID =
             "SELECT * FROM users WHERE user_group_id = ?";
 
+    public String getFIND_ALL_USERS_BY_GROUP_ID() {
+        return FIND_ALL_USERS_BY_GROUP_ID;
+    }
+
+    @Override
     public User create(User user){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(CREATE_USER_QUERY,
@@ -46,7 +52,8 @@ public class UserDao {
         }
     }
 
-    public User read(int userId){
+    @Override
+    public User read(Integer userId){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_USER_QUERY);
             statement.setInt(1, userId);
@@ -66,6 +73,7 @@ public class UserDao {
         }
     }
 
+    @Override
     public void update(User user){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_QUERY);
@@ -80,7 +88,8 @@ public class UserDao {
         }
     }
 
-    public void delete(int userId){
+    @Override
+    public void delete(Integer userId){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(DELETE_USER_QUERY);
             statement.setInt(1,userId);
@@ -90,6 +99,7 @@ public class UserDao {
         }
     }
 
+    @Override
     public List<User> findAll(){
         List<User> userList = new ArrayList<>();
 

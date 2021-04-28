@@ -28,6 +28,10 @@ public class UserManager {
         System.out.println(crudManager2.findAllByUserId(1, solutionDao.getFIND_ALL_BY_USER_ID_QUERY()));
         System.out.println(crudManager2.findAllByExerciseId(1, solutionDao.getFIND_ALL_BY_EXERCISE_ID_QUERY()));
 
+        UserDao userDao = new UserDao();
+        CrudManager<User,Integer> crudManager3 = userDao;
+        System.out.println("Metoda z USERMANAGER: " + crudManager3.findAllByExerciseId(1,userDao.getFIND_ALL_USERS_BY_GROUP_ID()));
+
 
     }
 

@@ -2,6 +2,7 @@ package pl.matkoc.service;
 
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Solution;
+import pl.matkoc.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,7 @@ public interface CrudManager<T,V> {
     void delete(V type);
     List<T> findAll();
 
+    // metoda do klasy SolutionDao
     default public List<T> findAllByUserId(V userId, String query){
         List<T> solutionList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
@@ -42,6 +44,7 @@ public interface CrudManager<T,V> {
         }
     }
 
+    // metoda do klasy SolutionDao
     default  public List<T> findAllByExerciseId(V exerciseId,String query){
         List<T> solutionList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
@@ -61,6 +64,30 @@ public interface CrudManager<T,V> {
                 solutionList.add((T) solution);
             }
             return solutionList;
+        }catch (SQLException exc){
+            exc.printStackTrace();
+            return null;
+        }
+    }
+
+    // metoda dla klasy UserDao
+    default public List<T> findAllByGroupId(V groupId,String query){
+        List<T> userList = new ArrayList<>();
+        try(Connection connection = DBUtil.getConnection()){
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1,(Integer)groupId);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                User user = new User();
+                user.setId(resultSet.getInt("id_user"));
+                user.setUserName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setGroupId(resultSet.getInt("user_group_id"));
+
+                userList.add((T)user);
+            }
+            return userList;
         }catch (SQLException exc){
             exc.printStackTrace();
             return null;
