@@ -27,6 +27,7 @@ public class Menu {
         switch(choice){
             case 1:{
                 System.out.println("Dodawanie...");
+
             }break;
             case 2:{
                 System.out.println("Edycja...");

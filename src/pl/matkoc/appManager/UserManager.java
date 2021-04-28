@@ -1,8 +1,10 @@
 package pl.matkoc.appManager;
 
 import pl.matkoc.dao.ExerciseDao;
+import pl.matkoc.dao.GroupDao;
 import pl.matkoc.dao.UserDao;
 import pl.matkoc.model.Exercise;
+import pl.matkoc.model.Group;
 import pl.matkoc.model.User;
 import pl.matkoc.service.CrudManager;
 
@@ -16,6 +18,9 @@ public class UserManager {
         CrudManager<Exercise,Integer> crudManager = exerciseDao;
         System.out.println(crudManager.read(1));
         System.out.println(crudManager.finaAll());
+        CrudManager<Group,Integer> crudManager1 = new GroupDao();
+        System.out.println(crudManager1.read(1));
+        System.out.println(crudManager1.finaAll());
 
     }
 

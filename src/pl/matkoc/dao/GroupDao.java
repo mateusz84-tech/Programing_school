@@ -2,6 +2,7 @@ package pl.matkoc.dao;
 
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Group;
+import pl.matkoc.service.CrudManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDao {
+public class GroupDao implements CrudManager<Group, Integer> {
 
     private final String CREATE_GROUP_QUERY =
             "INSERT INTO user_group(name) VALUES(?)";
@@ -22,6 +23,7 @@ public class GroupDao {
             "DELETE FROM user_group WHERE id_group = ?";
     private final String GET_ALL_GROUP = "SELECT * FROM user_group";
 
+    @Override
     public Group create(Group group){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement =
@@ -40,7 +42,8 @@ public class GroupDao {
         }
     }
 
-    public Group read(int groupId){
+    @Override
+    public Group read(Integer groupId){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_GROUP_QUERY);
             statement.setInt(1,groupId);
@@ -58,6 +61,7 @@ public class GroupDao {
         }
     }
 
+    @Override
     public void update (Group group){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(UPDATE_GROUP_QUERY);
@@ -70,7 +74,8 @@ public class GroupDao {
         }
     }
 
-    public void delete(int id){
+    @Override
+    public void delete(Integer id){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(DELETE_GROUP_QUERY);
             statement.setInt(1,id);
@@ -81,9 +86,9 @@ public class GroupDao {
         }
     }
 
-    public List<Group> findAll(){
+    @Override
+    public List<Group> finaAll() {
         List<Group> groupList = new ArrayList<>();
-
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_GROUP);
             ResultSet resultSet = statement.executeQuery();
