@@ -1,7 +1,10 @@
 package pl.matkoc.appManager;
 
+import pl.matkoc.dao.ExerciseDao;
 import pl.matkoc.dao.UserDao;
+import pl.matkoc.model.Exercise;
 import pl.matkoc.model.User;
+import pl.matkoc.service.CrudManager;
 
 import java.util.List;
 
@@ -9,10 +12,10 @@ public class UserManager {
 
     public static void main(String[] args) {
 
-        UserDao userDao = new UserDao();
-        displayAllUser(userDao);
-        Menu.display();
-        Menu.getChoiceMenu();
+        ExerciseDao exerciseDao = new ExerciseDao();
+        CrudManager<Exercise,Integer> crudManager = exerciseDao;
+        System.out.println(crudManager.read(1));
+        System.out.println(crudManager.finaAll());
 
     }
 

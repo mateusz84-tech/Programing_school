@@ -2,6 +2,7 @@ package pl.matkoc.dao;
 
 import pl.matkoc.connection.DBUtil;
 import pl.matkoc.model.Exercise;
+import pl.matkoc.service.CrudManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExerciseDao {
+public class ExerciseDao implements CrudManager<Exercise, Integer> {
 
     private final String CREATE_EXERCISE_QUERY =
             "INSERT INTO exercise(title, description) VALUES(?,?)";
@@ -23,6 +24,7 @@ public class ExerciseDao {
     private final String GET_ALL_EXERCISE =
             "SELECT * FROM exercise";
 
+    @Override
     public Exercise create(Exercise exercise){
         try(Connection connection = DBUtil.getConnection()) {
             PreparedStatement statement =
@@ -42,7 +44,8 @@ public class ExerciseDao {
         }
     }
 
-    public Exercise read(int exercise_id){
+    @Override
+    public Exercise read(Integer exercise_id){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(READ_EXERCISE_QUERY);
             statement.setInt(1,exercise_id);
@@ -60,6 +63,7 @@ public class ExerciseDao {
         }
     }
 
+    @Override
     public void update(Exercise exercise){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(UPDATE_EXERCISE_QUERY);
@@ -73,7 +77,8 @@ public class ExerciseDao {
         }
     }
 
-    public void delete(int id){
+    @Override
+    public void delete(Integer id){
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(DELETE_EXERCISE_QUERY);
             statement.setInt(1,id);
@@ -84,8 +89,8 @@ public class ExerciseDao {
         }
     }
 
-    public List<Exercise> findAll(){
-
+    @Override
+    public List<Exercise> finaAll() {
         List<Exercise> exerciseList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_EXERCISE);
