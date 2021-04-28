@@ -90,7 +90,7 @@ public class ExerciseDao implements CrudManager<Exercise, Integer> {
     }
 
     @Override
-    public List<Exercise> finaAll() {
+    public List<Exercise> findAll() {
         List<Exercise> exerciseList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_EXERCISE);

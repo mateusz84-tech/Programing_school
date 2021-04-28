@@ -8,5 +8,5 @@ public interface CrudManager<T,V> {
     T read(V value);
     void update(T type);
     void delete(V type);
-    List<T> finaAll();
+    List<T> findAll();
 }

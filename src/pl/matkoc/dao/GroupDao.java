@@ -87,7 +87,7 @@ public class GroupDao implements CrudManager<Group, Integer> {
     }
 
     @Override
-    public List<Group> finaAll() {
+    public List<Group> findAll() {
         List<Group> groupList = new ArrayList<>();
         try(Connection connection = DBUtil.getConnection()){
             PreparedStatement statement = connection.prepareStatement(GET_ALL_GROUP);
