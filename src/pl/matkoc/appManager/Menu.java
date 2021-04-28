@@ -1,5 +1,7 @@
 package pl.matkoc.appManager;
 
+import pl.matkoc.service.CrudManager;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,7 +16,7 @@ public class Menu {
         System.out.printf("\t%-20s%n\t","4. Zakończ");
     }
 
-    public static void getChoiceMenu(){
+    public static <T, V> void getChoiceMenu(CrudManager<T,V> crudManager){
 
         Scanner input = new Scanner(System.in);
         int choice = 0;
