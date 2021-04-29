@@ -1,5 +1,6 @@
 package pl.matkoc.appManager;
 
+import pl.matkoc.model.Exercise;
 import pl.matkoc.service.CrudManager;
 
 import java.util.InputMismatchException;
@@ -7,13 +8,23 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static void display(){
+    public static void displaySubject(){
+        System.out.println();
+        System.out.printf("%20s%n\t","====== MENU =======");
+        System.out.printf("\t%-20s%n\t","1. Ćwiczenie");
+        System.out.printf("\t%-20s%n\t","2. Grupa");
+        System.out.printf("\t%-20s%n\t","3. Urzytkownik");
+        System.out.printf("\t%-20s%n\t","4. Rozwiązanie");
+    }
+
+    public static void displayActionOptions(){
         System.out.println();
         System.out.printf("%20s%n\t","====== MENU =======");
         System.out.printf("\t%-20s%n\t","1. Dodaj");
-        System.out.printf("\t%-20s%n\t","2. Edytuj");
-        System.out.printf("\t%-20s%n\t","3. Usuń");
-        System.out.printf("\t%-20s%n\t","4. Zakończ");
+        System.out.printf("\t%-20s%n\t","2. Wczytaj");
+        System.out.printf("\t%-20s%n\t","3. Edytuj");
+        System.out.printf("\t%-20s%n\t","4. Usuń");
+        System.out.printf("\t%-20s%n\t","4. Pokaż listę");
     }
 
     public static <T, V> void getChoiceMenu(CrudManager<T,V> crudManager){
@@ -25,6 +36,7 @@ public class Menu {
             choice = input.nextInt();
         }catch (InputMismatchException exc){
             System.out.println("Błędne dane wejściowe.");
+
         }
         switch(choice){
             case 1:{
