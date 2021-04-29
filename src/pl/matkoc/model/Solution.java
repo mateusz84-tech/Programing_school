@@ -106,8 +106,9 @@ public class Solution {
 
     @Override
     public String toString() {
-        return String.format("%d %tB %tB %s%n%s: %s%n%s %s"
-                ,getId(),getCreated(),getUpdated(),getDescription(),
+        return String.format("%s: %d %s: %s %s: %s %s: %s %s: %d %s: %d%n","ID:"
+                ,getId(),"Utoworzono: ",getCreated(),
+                "Edytowano: ",getUpdated(),"Opis: ",getDescription(),
                 "Użytkownik nr",getUserId(),"Ćwiczenie nr",getExerciseId());
     }
 }
