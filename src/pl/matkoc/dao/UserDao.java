@@ -18,7 +18,7 @@ public class UserDao implements CrudManager<User,Integer> {
     private final String READ_USER_QUERY =
             "SELECT * FROM users WHERE id_user = ?";
     private final String UPDATE_USER_QUERY =
-            "UPDATE users SET username = ?, email = ?, password = ? user_group_id = ? WHERE id_user = ?";
+            "UPDATE users SET username = ?, email = ?, password = ?, user_group_id = ? WHERE id_user = ?";
     private final String DELETE_USER_QUERY =
             "DELETE FROM users WHERE id_user = ?";
     private final String FIND_ALL_USERS =
@@ -80,7 +80,7 @@ public class UserDao implements CrudManager<User,Integer> {
             statement.setString(1,user.getUserName());
             statement.setString(2,user.getEmail());
             statement.setString(3,user.getPassword());
-            statement.setInt(1,user.getGroupId());
+            statement.setInt(4,user.getGroupId());
             statement.setInt(5,user.getId());
             statement.executeUpdate();
         }catch (SQLException exc){
