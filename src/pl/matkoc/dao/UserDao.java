@@ -16,7 +16,7 @@ public class UserDao implements CrudManager<User,Integer> {
     private final String CREATE_USER_QUERY =
             "INSERT INTO users(username,email,password,user_group_id)VALUES(?,?,?,?)";
     private final String READ_USER_QUERY =
-            "SELECT * FORM users WHERE id_user = ?";
+            "SELECT * FROM users WHERE id_user = ?";
     private final String UPDATE_USER_QUERY =
             "UPDATE users SET username = ?, email = ?, password = ? user_group_id = ? WHERE id_user = ?";
     private final String DELETE_USER_QUERY =
