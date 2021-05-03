@@ -68,7 +68,6 @@ public class GroupDao implements CrudManager<Group, Integer> {
             statement.setString(1,group.getName());
             statement.setInt(2,group.getId());
             statement.executeUpdate();
-            System.out.println("Zaktualizowano dane.");
         }catch (SQLException exc){
             exc.printStackTrace();
         }
