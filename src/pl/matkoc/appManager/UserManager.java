@@ -21,7 +21,15 @@ public class UserManager {
             Menu.displayActionOptions();
             selectUserAction(facade);
         }
+    }
 
+    public static void userManagement(){
+        CrudFacade crudFacade = new CrudFacade();
+        while (true){
+            displayAllUser(crudFacade);
+            Menu.displayActionOptions();
+            selectUserAction(crudFacade);
+        }
     }
 
     public static void displayAllUser(CrudFacade allUser){

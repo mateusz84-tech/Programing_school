@@ -20,8 +20,15 @@ public class ExerciseManager {
             Menu.displayActionOptions();
             selectExerciseAction(exerciseManage);
         }
+    }
 
-
+    public static void exerciseManagement(){
+        CrudFacade crudFacade = new CrudFacade();
+        while(true){
+            displayAllExercise();
+            Menu.displayActionOptions();
+            selectExerciseAction(crudFacade);
+        }
     }
 
     public static void displayAllExercise(){

@@ -19,7 +19,13 @@ public class SolutionManager {
             Menu.displaySolutionAction();
             selectSolutionAction(crudFacade);
         }
+    }
 
+    public static void solutionManagement(){
+        CrudFacade crudFacade = new CrudFacade();
+        displaySolution(crudFacade);
+        Menu.displaySolutionAction();
+        selectSolutionAction(crudFacade);
     }
 
     public static void displaySolution(CrudFacade crudFacade){

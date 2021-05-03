@@ -20,6 +20,16 @@ public class GroupManger {
         }
     }
 
+    public static void groupManagement(){
+        CrudFacade crudFacade = new CrudFacade();
+        while(true){
+            displayAllGroup();
+            Menu.displayActionOptions();
+            selectGroupAction(crudFacade);
+            displayAllGroup();
+        }
+    }
+
     public static void displayAllGroup(){
         GroupDao groupDao = new GroupDao();
         List<Group> groupList = groupDao.findAll();
