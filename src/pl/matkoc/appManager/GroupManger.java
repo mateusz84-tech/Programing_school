@@ -88,8 +88,9 @@ public class GroupManger {
                 System.out.println("Dane zostały usunięte.");
             }break;
             case 5:{
-                System.out.println("Dziękuje za skorzystanie z programu.");
-                System.exit(0);
+                System.out.println("Wyjście do menu głównego.");
+                String[] str = new String[0];
+                Application.main(str);
             }break;
             default:
                 System.out.println("Brak takiej opcji w menu.");

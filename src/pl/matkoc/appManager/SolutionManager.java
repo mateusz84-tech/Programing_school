@@ -79,8 +79,9 @@ public class SolutionManager {
 
             }break;
             case 3:{
-                System.out.println("Dziekuje za skorzystanie z programu.");
-                System.exit(0);
+                System.out.println("Wyjście do menu głównego.");
+                String[] str = new String[0];
+                Application.main(str);
             }break;
             default:
                 System.out.println("Brak takiej opcji.");

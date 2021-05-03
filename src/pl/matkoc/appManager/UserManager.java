@@ -106,8 +106,9 @@ public class UserManager {
                 System.out.println("Użytkownik został usunięty z bazy.");
             }break;
             case 5: {
-                System.out.println("Dziękuje za skorzystanie z programu.");
-                System.exit(0);
+                System.out.println("Wyjście do menu głównego.");
+                String[] str = new String[0];
+                Application.main(str);
             }break;
             default:
                 System.out.println("Nie ma takiej opcji w menu.");
