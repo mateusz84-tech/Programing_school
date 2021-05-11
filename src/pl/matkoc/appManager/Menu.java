@@ -9,7 +9,7 @@ public class Menu {
         System.out.printf("%20s%n\t","====== MENU =======");
         System.out.printf("\t%-20s%n\t","1. Ćwiczenie");
         System.out.printf("\t%-20s%n\t","2. Grupa");
-        System.out.printf("\t%-20s%n\t","3. Urzytkownik");
+        System.out.printf("\t%-20s%n\t","3. Użytkownik");
         System.out.printf("\t%-20s%n\t","4. Rozwiązanie");
         System.out.printf("\t%-20s%n\t","5. Wyjdź");
     }
